@@ -5,6 +5,7 @@ const port = 9876;
 
 const WINDOW_SIZE = 10;
 let numbersWindow = [];
+const AUTH_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJNYXBDbGFpbXMiOnsiZXhwIjoxNzIzNzg5OTUxLCJpYXQiOjE3MjM3ODk2NTEsImlzcyI6IkFmZm9yZG1lZCIsImp0aSI6IjA5Y2YzOGVhLTM4OTktNGE2My1hMGU5LWZmOTY3ZTA1ZTgwMSIsInN1YiI6InNhbmpheS55YWxsYUBzYXNpLmFjLmluIn0sImNvbXBhbnlOYW1lIjoiU2FzaSBJbnN0aXR1dGUgT2YgVGVjaG5vbG9neSBcdTAwMjYgRW5naW5lZXJpbmciLCJjbGllbnRJRCI6IjA5Y2YzOGVhLTM4OTktNGE2My1hMGU5LWZmOTY3ZTA1ZTgwMSIsImNsaWVudFNlY3JldCI6IkZPT2ZQTElFSlRhbXRNa2UiLCJvd25lck5hbWUiOiJTYW5qYXkgWWFsbGEiLCJvd25lckVtYWlsIjoic2FuamF5LnlhbGxhQHNhc2kuYWMuaW4iLCJyb2xsTm8iOiIyMUs2MUExMjY1In0.0tpQu8hJKBMrk-Z3S9OWGCJxbbD4vKS-IQOK6LB7xy8';
 
 app.get('/numbers/:type', async (req, res) => {
     const type = req.params.type;
@@ -29,7 +30,12 @@ app.get('/numbers/:type', async (req, res) => {
     }
 
     try {
-        const response = await axios.get(apiUrl);
+        const response = await axios.get(apiUrl, {
+            headers: {
+                'Authorization': `Bearer ${AUTH_KEY}`
+            }
+        });
+       
         const numbers = response.data.numbers;
 
         // Update the window with new numbers
